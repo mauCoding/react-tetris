@@ -1,67 +1,67 @@
 import React from "react";
 
-import "../styles/GameController.css"
+import "../styles/GameController.css";
 
 import { actionKey, Action, actionDrop } from "../utils/Input";
-import {playerController} from "../utils/PlayerController";
+import { playerController } from "../utils/PlayerController";
 
 import { useInterval } from "../hooks/useInterval";
 import { useDropTime } from "../hooks/useDropTime";
 
 const GameController = ({
-    board,
+  board,
+  gameStats,
+  player,
+  setGameOver,
+  setPlayer,
+}) => {
+  const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({
     gameStats,
-    player,
-    setGameOver,
-    setPlayer
-   }) => {
-    const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({
-        gameStats
-    });
+  });
 
-useInterval(()=>{
-    handleInput({action: Action.SlowDrop}
-    )},dropTime);
+  useInterval(() => {
+    handleInput({ action: Action.SlowDrop });
+  }, dropTime);
 
-const onKeyUp = ({code}) => {
-    const action = actionKey(code)
-    if(actionDrop(action)) resumeDropTime();
-};
-const onKeyDown = ({code}) =>{
+  const onKeyUp = ({ code }) => {
+    const action = actionKey(code);
+    if (actionDrop(action)) resumeDropTime();
+  };
+  const onKeyDown = ({ code }) => {
     const action = actionKey(code);
 
-    if(action === Action.Pause){
-        if(dropTime){
-            pauseDropTime();
-        } else {
-            resumeDropTime();
-        }
-    }else if (action === Action.Quit){
-        setGameOver(true);
-    }else {
-        if(actionDrop(action)) pauseDropTime();
-        handleInput({action});
+    if (action === Action.Pause) {
+      if (dropTime) {
+        pauseDropTime();
+      } else {
+        resumeDropTime();
+      }
+    } else if (action === Action.Quit) {
+      setGameOver(true);
+    } else {
+      if (actionDrop(action)) pauseDropTime();
+      handleInput({ action });
     }
-};
+  };
 
-const handleInput = ({action}) => {
-  playerController({
+  const handleInput = ({ action }) => {
+    playerController({
       action,
       board,
       player,
       setPlayer,
-      setGameOver
-  })
-};
-    return (
-        <input
-        className="GameController"
-        type="text"
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
-        autoFocus
-        />
-    );
+      setGameOver,
+    });
+  };
+  return (
+    <input
+      className="GameController"
+      type="text"
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
+      autoFocus
+    />
+  );
 };
 
 export default GameController;

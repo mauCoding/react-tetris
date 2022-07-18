@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React from "react";
 
 import Menu from "../../src/components/Menu";
 import Tetris from "../../src/components/Tetris";
@@ -7,19 +6,19 @@ import Tetris from "../../src/components/Tetris";
 import { useGameOver } from "../../src/hooks/useGameOver";
 
 const Game = ({ rows, columns }) => {
-    const [gameOver, setGameOver, resetGameOver] = useGameOver();
+  const [gameOver, setGameOver, resetGameOver] = useGameOver();
 
-    const start = () => resetGameOver();
+  const start = () => resetGameOver();
 
-    return (
-        <div className="Game">
-            {gameOver ? (
-                <Menu onClick={start} />
-            ) : (
-                <Tetris rows={rows} columns={columns} setGameOver={setGameOver} />
-            )}
-        </div>
-    );
+  return (
+    <div className="Game">
+      {gameOver ? (
+        <Menu onClick={start} />
+      ) : (
+        <Tetris rows={rows} columns={columns} setGameOver={setGameOver} />
+      )}
+    </div>
+  );
 };
 
 export default Game;

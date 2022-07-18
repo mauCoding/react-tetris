@@ -1,10 +1,10 @@
-import React from 'react'
-import './styles/App.css';
-import Game from './components/Game'
+import React from "react";
+import "./styles/App.css";
+import Game from "./components/Game";
 function App() {
   return (
     <div className="App">
-        <Game rows={20} columns={10}/>
+      <Game rows={20} columns={10} />
     </div>
   );
 }
